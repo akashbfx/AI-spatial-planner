@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered spatial planning tool for coworking and innovation workspace design. Generate intelligent room layouts and furniture arrangements.">
+    <title>SpaceAI — Intelligent Spatial Planning for Coworking Design</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="url(#logo-grad)" stroke-width="2.5"/>
+                    <rect x="7" y="7" width="8" height="8" rx="2" fill="#4A90D9" opacity="0.8"/>
+                    <rect x="17" y="7" width="8" height="8" rx="2" fill="#50B86C" opacity="0.8"/>
+                    <rect x="7" y="17" width="8" height="8" rx="2" fill="#E8833A" opacity="0.8"/>
+                    <rect x="17" y="17" width="8" height="8" rx="2" fill="#9B59B6" opacity="0.8"/>
+                    <defs><linearGradient id="logo-grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4A90D9"/><stop offset="1" stop-color="#9B59B6"/></linearGradient></defs>
+                </svg>
+                <h1>Space<span class="accent">AI</span></h1>
+            </div>
+            <span class="tagline">Intelligent Spatial Planning</span>
+        </div>
+        <div class="header-center">
+            <button id="btn-draw-mode" class="header-btn active" title="Draw Room">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                Draw
+            </button>
+            <button id="btn-config-mode" class="header-btn" title="Configure">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                Configure
+            </button>
+            <button id="btn-results-mode" class="header-btn" title="Results">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Results
+            </button>
+        </div>
+        <div class="header-right">
+            <button id="btn-theme-toggle" class="header-btn" title="Toggle Light/Dark Mode">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
+            <button id="btn-generate" class="btn-primary pulse-glow" title="Generate Optimized Layouts">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Generate Layouts
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="app-main">
+
+        <!-- Left Panel — Canvas -->
+        <section id="canvas-panel">
+            <div class="panel-header">
+                <h2>Room Editor</h2>
+                <div class="canvas-tools">
+                    <button id="btn-draw-walls" class="tool-btn active" title="Draw Walls">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="3" x2="21" y2="3"/><line x1="21" y1="3" x2="21" y2="21"/><line x1="21" y1="21" x2="3" y2="21"/><line x1="3" y1="21" x2="3" y2="3"/></svg>
+                    </button>
+                    <button id="btn-edit-wall" class="tool-btn" title="Edit Walls (drag vertices, click midpoint to add)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                    </button>
+                    <button id="btn-add-door" class="tool-btn" title="Add Door">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 2h14a1 1 0 011 1v18a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z"/><circle cx="15" cy="12" r="1"/></svg>
+                    </button>
+                    <button id="btn-add-window" class="tool-btn" title="Add Window">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+                    </button>
+                    <div class="tool-divider"></div>
+                    <button id="btn-select" class="tool-btn" title="Select (click doors/windows to edit)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+                    </button>
+                    <button id="btn-measure" class="tool-btn" title="Measure Distance">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h5l2-7 4 14 2-7h5"/></svg>
+                    </button>
+                    <div class="tool-divider"></div>
+                    <select id="snap-grid-select" class="snap-select" title="Grid Snap">
+                        <option value="10">10cm</option>
+                        <option value="50">50cm</option>
+                        <option value="100">1m</option>
+                        <option value="5">5cm</option>
+                    </select>
+                    <div class="tool-divider"></div>
+                    <button id="btn-clear-canvas" class="tool-btn danger" title="Clear All">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                    </button>
+                    <button id="btn-undo" class="tool-btn" title="Undo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="canvas-container">
+                <canvas id="room-canvas"></canvas>
+                <div id="canvas-overlay">
+                    <div class="grid-info">
+                        <span id="canvas-dimensions">0 × 0 cm</span>
+                        <span id="canvas-area">0 sqm</span>
+                    </div>
+                    <div id="cursor-position" class="cursor-info">x: 0 y: 0</div>
+                </div>
+                <!-- Element Properties Panel (shown when selecting doors/windows) -->
+                <div id="element-properties" class="element-properties hidden"></div>
+            </div>
+            <!-- Preset selector -->
+            <div id="preset-bar">
+                <span class="preset-label">Quick Start:</span>
+                <div id="preset-buttons"></div>
+            </div>
+        </section>
+
+        <!-- Right Panel — Sidebar -->
+        <aside id="sidebar">
+            <!-- Tabs -->
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" data-tab="room-tab">Room</button>
+                <button class="sidebar-tab" data-tab="furniture-tab">Furniture</button>
+                <button class="sidebar-tab" data-tab="preferences-tab">Settings</button>
+                <button class="sidebar-tab" data-tab="chat-tab">
+                    AI Chat
+                    <span class="tab-badge">✨</span>
+                </button>
+            </div>
+
+            <!-- Room Tab -->
+            <div id="room-tab" class="tab-content active">
+                <div class="config-section">
+                    <h3>Room Dimensions</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="room-width">Width (m)</label>
+                            <input type="number" id="room-width" value="8" min="2" max="30" step="0.5">
+                        </div>
+                        <div class="input-group">
+                            <label for="room-height">Depth (m)</label>
+                            <input type="number" id="room-height" value="6" min="2" max="30" step="0.5">
+                        </div>
+                    </div>
+                    <button id="btn-apply-dimensions" class="btn-secondary">Apply Dimensions</button>
+                </div>
+
+                <div class="config-section">
+                    <h3>Doors</h3>
+                    <div id="doors-list" class="items-list"></div>
+                    <button id="btn-add-door-config" class="btn-add">+ Add Door</button>
+                </div>
+
+                <div class="config-section">
+                    <h3>Windows</h3>
+                    <div id="windows-list" class="items-list"></div>
+                    <button id="btn-add-window-config" class="btn-add">+ Add Window</button>
+                </div>
+            </div>
+
+            <!-- Furniture Tab -->
+            <div id="furniture-tab" class="tab-content">
+                <div class="config-section">
+                    <h3>Smart Suggest</h3>
+                    <p class="section-desc">Auto-recommend furniture based on room size and use case</p>
+                    <select id="use-case-select" class="select-input">
+                        <option value="analyze">🔍 Analyze Room & Recommend</option>
+                        <option value="hot_desking">🖥️ Hot Desking</option>
+                        <option value="team_pods">👥 Team Pods</option>
+                        <option value="meeting_heavy">🤝 Meeting Heavy</option>
+                        <option value="collaborative_hub">💡 Collaborative Hub</option>
+                        <option value="hybrid_flex" selected>⚡ Hybrid Flex</option>
+                    </select>
+                    <button id="btn-smart-suggest" class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+                        Smart Suggest
+                    </button>
+                    <div id="suggest-result" class="suggest-result hidden"></div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Furniture List</h3>
+                    <div id="furniture-list" class="items-list"></div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Add from Catalog</h3>
+                    <select id="catalog-select" class="select-input"></select>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="furn-count">Qty</label>
+                            <input type="number" id="furn-count" value="1" min="1" max="50">
+                        </div>
+                        <button id="btn-add-catalog" class="btn-secondary">Add</button>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Custom Furniture</h3>
+                    <div class="input-group">
+                        <label for="custom-name">Name</label>
+                        <input type="text" id="custom-name" placeholder="My Custom Desk">
+                    </div>
+                    <div class="input-group">
+                        <label for="custom-category">Category</label>
+                        <select id="custom-category" class="select-input"></select>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="custom-width">W (cm)</label>
+                            <input type="number" id="custom-width" value="120" min="20" max="500">
+                        </div>
+                        <div class="input-group">
+                            <label for="custom-depth">D (cm)</label>
+                            <input type="number" id="custom-depth" value="60" min="20" max="300">
+                        </div>
+                        <div class="input-group">
+                            <label for="custom-height">H (cm)</label>
+                            <input type="number" id="custom-height" value="75" min="20" max="300">
+                        </div>
+                    </div>
+                    <button id="btn-add-custom" class="btn-secondary">+ Add Custom</button>
+                </div>
+            </div>
+
+            <!-- Preferences Tab -->
+            <div id="preferences-tab" class="tab-content">
+                <div class="config-section">
+                    <h3>Sun Orientation</h3>
+                    <div class="compass-container">
+                        <div id="compass" class="compass">
+                            <div class="compass-ring">
+                                <span class="compass-dir" data-dir="0">N</span>
+                                <span class="compass-dir" data-dir="90">E</span>
+                                <span class="compass-dir" data-dir="180">S</span>
+                                <span class="compass-dir" data-dir="270">W</span>
+                            </div>
+                            <div id="compass-needle" class="compass-needle" style="transform: rotate(180deg)"></div>
+                            <div class="compass-center"></div>
+                        </div>
+                        <div class="compass-value">
+                            <input type="range" id="sun-orientation" min="0" max="359" value="180">
+                            <span id="sun-value">180° (S)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Daylight Priority</h3>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="daylight" value="low"> Low</label>
+                        <label class="radio-label"><input type="radio" name="daylight" value="medium" checked> Medium</label>
+                        <label class="radio-label"><input type="radio" name="daylight" value="high"> High</label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Circulation Width</h3>
+                    <div class="input-group">
+                        <label for="circulation-width">Min corridor (cm)</label>
+                        <input type="number" id="circulation-width" value="90" min="75" max="200" step="5">
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3>Engine Mode</h3>
+                    <p class="section-desc">Fast uses rule-based + ML hybrid engine. Quality uses genetic algorithm (slower).</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="engine-mode-toggle">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-labels">
+                            <span class="toggle-fast">⚡ Fast</span>
+                            <span class="toggle-quality">🧬 Quality</span>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="config-section">
+                    <h3>Export</h3>
+                    <button id="btn-export-svg" class="btn-secondary" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export SVG
+                    </button>
+                    <button id="btn-export-png" class="btn-secondary" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export PNG
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="chat-tab" class="tab-content">
+                <div id="chat-messages" class="chat-messages">
+                    <div class="chat-msg bot">
+                        <div class="msg-avatar">🤖</div>
+                        <div class="msg-content">
+                            Hello! I'm your AI spatial planning assistant. Tell me about your coworking space needs — like <em>"I need seating for 20 people"</em> or <em>"Make it collaborative"</em>.
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-suggestions" id="chat-suggestions">
+                    <button class="suggestion-chip" data-msg="I need seating for 15 people">Seating for 15</button>
+                    <button class="suggestion-chip" data-msg="Add 2 meeting tables">2 Meeting Tables</button>
+                    <button class="suggestion-chip" data-msg="Make it collaborative">Collaborative</button>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Type your requirements..." autocomplete="off">
+                    <button id="btn-chat-send" class="btn-send">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Results Panel (Bottom) -->
+    <section id="results-panel" class="hidden">
+        <div class="results-header">
+            <h2>Generated Layouts</h2>
+            <div class="results-meta">
+                <span id="results-time"></span>
+                <span id="results-generations"></span>
+                <button id="btn-close-results" class="tool-btn">✕</button>
+            </div>
+        </div>
+        <div id="layouts-grid" class="layouts-grid"></div>
+    </section>
+
+    <!-- Layout Detail Modal -->
+    <div id="layout-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Layout Detail</h2>
+                <div class="modal-actions">
+                    <button id="btn-toggle-3d" class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        3D View
+                    </button>
+                    <button id="btn-modal-close" class="tool-btn">✕</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-left">
+                    <canvas id="detail-canvas"></canvas>
+                    <div id="three-container" class="hidden"></div>
+                </div>
+                <div class="modal-right">
+                    <div class="score-card">
+                        <div class="score-composite">
+                            <span class="score-value" id="modal-score">0</span>
+                            <span class="score-grade" id="modal-grade">-</span>
+                        </div>
+                        <canvas id="radar-chart" width="250" height="250"></canvas>
+                    </div>
+                    <div id="modal-furniture-list" class="modal-furniture-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h3>Generating Optimized Layouts</h3>
+            <p class="loading-desc">Running hybrid rule-based + ML optimization...</p>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/furniture-symbols.js"></script>
+    <script src="/static/js/canvas.js"></script>
+    <script src="/static/js/config-panel.js"></script>
+    <script src="/static/js/furniture-creator.js"></script>
+    <script src="/static/js/layout-viewer.js"></script>
+    <script src="/static/js/isometric-view.js"></script>
+    <script src="/static/js/chat.js"></script>
+    <script src="/static/js/export.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

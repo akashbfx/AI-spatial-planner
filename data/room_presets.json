@@ -1,0 +1,85 @@
+{
+  "presets": [
+    {
+      "id": "small_hotdesk",
+      "name": "Small Hot Desk Room",
+      "description": "Compact individual workstation space (6m × 5m, ~30 sqm)",
+      "vertices": [[0, 0], [600, 0], [600, 500], [0, 500]],
+      "doors": [
+        {"position": [300, 0], "width": 90, "wall_index": 0, "swing": "inward"}
+      ],
+      "windows": [
+        {"position": [600, 250], "width": 150, "wall_index": 1, "sill_height": 90, "head_height": 210}
+      ],
+      "suggested_use": "hot_desking",
+      "capacity": "8-10 people"
+    },
+    {
+      "id": "team_collab",
+      "name": "Team Collaboration Room",
+      "description": "Team pod workspace with shared areas (8m × 6m, ~48 sqm)",
+      "vertices": [[0, 0], [800, 0], [800, 600], [0, 600]],
+      "doors": [
+        {"position": [45, 300], "width": 90, "wall_index": 3, "swing": "inward"}
+      ],
+      "windows": [
+        {"position": [800, 200], "width": 180, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [800, 420], "width": 140, "wall_index": 1, "sill_height": 90, "head_height": 210}
+      ],
+      "suggested_use": "team_pods",
+      "capacity": "12-16 people"
+    },
+    {
+      "id": "open_plan",
+      "name": "Open Plan Coworking",
+      "description": "Mixed-zone open workspace (12m × 8m, ~96 sqm)",
+      "vertices": [[0, 0], [1200, 0], [1200, 800], [0, 800]],
+      "doors": [
+        {"position": [45, 400], "width": 100, "wall_index": 3, "swing": "inward"},
+        {"position": [600, 0], "width": 120, "wall_index": 0, "swing": "inward"}
+      ],
+      "windows": [
+        {"position": [1200, 200], "width": 200, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [1200, 500], "width": 200, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [400, 800], "width": 180, "wall_index": 2, "sill_height": 90, "head_height": 210},
+        {"position": [900, 800], "width": 180, "wall_index": 2, "sill_height": 90, "head_height": 210}
+      ],
+      "suggested_use": "hybrid_flex",
+      "capacity": "20-30 people"
+    },
+    {
+      "id": "l_shaped",
+      "name": "L-Shaped Innovation Lab",
+      "description": "Creative L-shaped workspace (10m × 8m with cut, ~64 sqm)",
+      "vertices": [[0, 0], [1000, 0], [1000, 500], [600, 500], [600, 800], [0, 800]],
+      "doors": [
+        {"position": [45, 400], "width": 90, "wall_index": 5, "swing": "inward"}
+      ],
+      "windows": [
+        {"position": [1000, 250], "width": 180, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [300, 800], "width": 200, "wall_index": 4, "sill_height": 90, "head_height": 210}
+      ],
+      "suggested_use": "collaborative_hub",
+      "capacity": "14-18 people"
+    },
+    {
+      "id": "large_multizone",
+      "name": "Large Multi-Zone Space",
+      "description": "Full coworking floor with all zones (15m × 10m, ~150 sqm)",
+      "vertices": [[0, 0], [1500, 0], [1500, 1000], [0, 1000]],
+      "doors": [
+        {"position": [45, 500], "width": 120, "wall_index": 3, "swing": "inward"},
+        {"position": [750, 0], "width": 120, "wall_index": 0, "swing": "inward"}
+      ],
+      "windows": [
+        {"position": [1500, 200], "width": 250, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [1500, 550], "width": 250, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [1500, 850], "width": 200, "wall_index": 1, "sill_height": 90, "head_height": 210},
+        {"position": [500, 1000], "width": 200, "wall_index": 2, "sill_height": 90, "head_height": 210},
+        {"position": [1000, 1000], "width": 200, "wall_index": 2, "sill_height": 90, "head_height": 210}
+      ],
+      "suggested_use": "hybrid_flex",
+      "capacity": "30-45 people"
+    }
+  ]
+}

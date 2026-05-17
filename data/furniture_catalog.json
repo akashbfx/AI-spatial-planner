@@ -1,0 +1,156 @@
+{
+  "furniture": [
+    {
+      "id": "wd_120",
+      "name": "Work Desk 120×60",
+      "category": "work_desk",
+      "width": 120,
+      "depth": 60,
+      "height": 75
+    },
+    {
+      "id": "wd_140",
+      "name": "Work Desk 140×70",
+      "category": "work_desk",
+      "width": 140,
+      "depth": 70,
+      "height": 75
+    },
+    {
+      "id": "wd_100",
+      "name": "Compact Desk 100×50",
+      "category": "work_desk",
+      "width": 100,
+      "depth": 50,
+      "height": 75
+    },
+    {
+      "id": "st_200",
+      "name": "Shared Table 200×100",
+      "category": "shared_table",
+      "width": 200,
+      "depth": 100,
+      "height": 75
+    },
+    {
+      "id": "st_180",
+      "name": "Shared Table 180×90",
+      "category": "shared_table",
+      "width": 180,
+      "depth": 90,
+      "height": 75
+    },
+    {
+      "id": "mt_240",
+      "name": "Meeting Table 240×120",
+      "category": "meeting_table",
+      "width": 240,
+      "depth": 120,
+      "height": 75
+    },
+    {
+      "id": "mt_200",
+      "name": "Meeting Table 200×100",
+      "category": "meeting_table",
+      "width": 200,
+      "depth": 100,
+      "height": 75
+    },
+    {
+      "id": "mt_300",
+      "name": "Conference Table 300×150",
+      "category": "meeting_table",
+      "width": 300,
+      "depth": 150,
+      "height": 75
+    },
+    {
+      "id": "ch_50",
+      "name": "Office Chair",
+      "category": "chair",
+      "width": 50,
+      "depth": 50,
+      "height": 85
+    },
+    {
+      "id": "ch_55",
+      "name": "Ergonomic Chair",
+      "category": "chair",
+      "width": 55,
+      "depth": 55,
+      "height": 90
+    },
+    {
+      "id": "sg_80",
+      "name": "Storage Cabinet 80×40",
+      "category": "storage",
+      "width": 80,
+      "depth": 40,
+      "height": 180
+    },
+    {
+      "id": "sg_120",
+      "name": "Storage Shelf 120×40",
+      "category": "storage",
+      "width": 120,
+      "depth": 40,
+      "height": 180
+    },
+    {
+      "id": "sg_60",
+      "name": "Pedestal Unit 60×40",
+      "category": "storage",
+      "width": 60,
+      "depth": 40,
+      "height": 60
+    },
+    {
+      "id": "cs_180",
+      "name": "Bench Seat 180×50",
+      "category": "collaborative_seating",
+      "width": 180,
+      "depth": 50,
+      "height": 45
+    },
+    {
+      "id": "cs_200",
+      "name": "Curved Sofa 200×80",
+      "category": "collaborative_seating",
+      "width": 200,
+      "depth": 80,
+      "height": 45
+    },
+    {
+      "id": "cs_120",
+      "name": "Modular Bench 120×50",
+      "category": "collaborative_seating",
+      "width": 120,
+      "depth": 50,
+      "height": 45
+    },
+    {
+      "id": "lg_80",
+      "name": "Lounge Chair 80×80",
+      "category": "lounge",
+      "width": 80,
+      "depth": 80,
+      "height": 70
+    },
+    {
+      "id": "lg_ct",
+      "name": "Coffee Table 60×60",
+      "category": "lounge",
+      "width": 60,
+      "depth": 60,
+      "height": 45
+    },
+    {
+      "id": "lg_sofa",
+      "name": "Lounge Sofa 160×70",
+      "category": "lounge",
+      "width": 160,
+      "depth": 70,
+      "height": 70
+    }
+  ]
+}
