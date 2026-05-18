@@ -1,5 +1,7 @@
 # 🏢 Spatial Planner
 
+https://ai-spatial-planner-akashb.vercel.app/
+
 AI-integrated software prototype developed as part of the architectural thesis project: K-SPACE: Aerospace Innovation Hub, Thiruvananthapuram, Kerala.
 
 An AI-powered coworking space layout generator. You describe your room and what furniture you need — it automatically generates multiple optimised layout options in under 500ms, with daylight analysis, an interactive canvas, and a natural language chat assistant. for office spaces
