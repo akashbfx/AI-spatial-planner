@@ -1,0 +1,23 @@
+{
+  "name": "spatial-planner",
+  "version": "1.0.0",
+  "description": "AI-powered spatial planning tool for coworking and innovation workspace design",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akashbfx/spatial-planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akashbfx/spatial-planner/issues"
+  },
+  "homepage": "https://github.com/akashbfx/spatial-planner#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
